@@ -1,0 +1,15 @@
+<!-- head content for loading all necessary filse, meant to be included on all pages -->
+{% load staticfiles %}
+
+<meta charset="UTF-8">
+<link href="{% static 'Bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'styles.css' %}" rel="stylesheet">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="{% static 'javascript.js' %}"></script>
+<script type="text/javascript" src="{% static 'Bootstrap/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'mixitup-master/src/jquery.mixitup.js' %}"></script>
+<script type="text/javascript" src="{% static 'mixitup-master/build/jquery.mixitup.min.js' %}"></script>
+
+
+<title>{{pagetitle}}</title>
+

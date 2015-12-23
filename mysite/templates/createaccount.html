@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+   {% include "head.html" with pagetitle="Create account" %}
+</head>
+<body>
+   {% include "navbar.html" %}
+   <div class="registration">
+       <!-- registration form -->
+       <form action="" method="POST" id="signup">
+           <div class="header">
+               <h1>Sign Up</h1>
+               <p>Fill this form to create an account</p>
+           </div>
+           <div class="sep"></div>
+           <div class="inputs">
+               {% csrf_token %}
+               {{ form.as_p }} <!--loads the fields of MyRegistrationForm -->
+           </div>
+           <input id="submitbutton" type="submit" value="Create account">
+      </form>
+  </div>
+</body>
+</html>

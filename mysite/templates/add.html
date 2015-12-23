@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+   {% include "head.html" with pagetitle="Profile"%}
+</head>
+
+<body class = "background">
+    {% include "navbar.html" %}
+    <h1 class = "homePageHeader">Recept</h1>
+    <div class="addDrink">
+        {% if request.user.is_authenticated %}
+            <form method="post" action="">
+            {% csrf_token %}
+                <div class="form-group">
+                    <label for="drinkNamn">Drink namn</label>
+                    <input type="text" class="form-control" name="drinkNamn">
+                </div>
+                <div class="form-group">
+                    <label for="url">bild url</label>
+                    <input type="url" class="form-control" name="url">
+                </div>
+                <div class="form-group">
+                    <label for="hv">HV-rating</label>
+                    <input type="text" class="form-control" name="hv">
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <input type="text" class="form-control" name="rating">
+                </div>
+                <div>
+                    <label for="type">Drinkens typ</label>
+                    <select name="type" id="type">
+                        <option value="sur">Sur</option>
+                        <option value="sot">Sot</option>
+                    </select><br>
+                </div>
+                <div class="form-group">
+                    <label for="instructions">Instructions (max 255 characters)</label>
+                    <input type="text" class="form-control" name="instructions">
+                </div>
+                <div class="form-group">
+                    <label for="ingredient1">Ingredient 1</label>
+                    <input type="text" class="form-control" name="ingredient1">
+                </div>
+                <div class="form-group">
+                    <label for="ingredient2">Ingredient 2</label>
+                    <input type="text" class="form-control" name="ingredient2">
+                </div>
+                <div class="form-group">
+                    <label for="ingredient3">Ingredient 3</label>
+                    <input type="text" class="form-control" name="ingredient3">
+                </div>
+                <div class="form-group">
+                    <label for="ingredient4">Ingredient 4</label>
+                    <input type="text" class="form-control" name="ingredient4">
+                </div>
+                <div class="form-group">
+                    <label for="ingredient5">Ingredient 5</label>
+                    <input type="text" class="form-control" name="ingredient5">
+                </div>
+                <div class="form-group">
+                    <label for="ingredient6">Ingredient 6</label>
+                    <input type="text" class="form-control" name="ingredient6">
+                </div>
+                <div class="form-group">
+                    <label for="ingredient7">Ingredient 7</label>
+                    <input type="text" class="form-control" name="ingredient7">
+                </div>
+                <div class="form-group">
+                    <label for="ingredient8">Ingredient 8</label>
+                    <input type="text" class="form-control" name="ingredient8">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        {% endif %}
+    </div>
+</body>
+</html>

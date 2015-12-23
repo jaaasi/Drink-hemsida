@@ -1,0 +1,26 @@
+{% load tags %}
+
+<li class="dropdown" id="menuLogin">
+	<a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
+    <div class="dropdown-menu" style="padding:17px;">
+        <form class="form" method="post" id="login" action="/login/">
+            {% csrf_token %}
+            <div class="input-group input-group-sm loginfield">
+                <span class="input-group-addon" id="basic-addon1">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                </span>
+                <input name="username" type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+            </div>
+
+            <div class="input-group input-group-sm loginfield">
+                <span class="input-group-addon" id="basic-addon2">
+                    <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                </span>
+                <input name="password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+            </div>
+            <button type="submit" class="btn btn-primary">Log in</button>
+        </form>
+        <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}"><div type="submit" class="btn btn-success">Log in with Google</div></a>
+    </div>
+</li>
+<li class="{% active request "/createaccount/" %}"><a href="/createaccount/">Register</a></li>

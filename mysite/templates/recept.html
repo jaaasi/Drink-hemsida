@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+   {% include "head.html" with pagetitle="Profile"%}
+</head>
+<body class = "background">
+    {% include "navbar.html" %}
+    <h1 class = "homePageHeader">Recept</h1>
+    <div class="categorylist">
+        <strong>Categories:</strong>
+        <!-- Display sorting buttons -->
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default filter" data-filter="all">Alla</button>
+            <button type="button" class="btn btn-default filter" data-filter=".sur">Sura</button>
+            <button type="button" class="btn btn-default filter" data-filter=".sot">Sota</button>
+        </div>
+    </div>
+    <a href="/add/"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a new game</button></a>
+    <div id = "Container">
+        <div class="row">
+            {% for drink in drinkList %}
+                {% if drink.type == "sur" %}
+                    <div class="mix sur col-md-3 box game_margin" data-myorder="1">
+                        <h2>{{ drink.namn }}</h2>
+                        <p>{{ drink.hv }}</p>
+                        <p>{{ drink.rating }}</p>
+                        <p>{{ drink.type }}</p>
+                        <p>{{ drink.instructions }}</p>
+                        {% if drink.ingredient1 != "" %}<p>{{ drink.ingredient1 }}</p>{% endif %}
+                        {% if drink.ingredient2 != "" %}<p>{{ drink.ingredient2 }}</p>{% endif %}
+                        {% if drink.ingredient3 != "" %}<p>{{ drink.ingredient3 }}</p>{% endif %}
+                        {% if drink.ingredient4 != "" %}<p>{{ drink.ingredient4 }}</p>{% endif %}
+                        {% if drink.ingredient5 != "" %}<p>{{ drink.ingredient5 }}</p>{% endif %}
+                        {% if drink.ingredient6 != "" %}<p>{{ drink.ingredient6 }}</p>{% endif %}
+                        {% if drink.ingredient7 != "" %}<p>{{ drink.ingredient7 }}</p>{% endif %}
+                        {% if drink.ingredient8 != "" %}<p>{{ drink.ingredient8 }}</p>{% endif %}
+                        <img src= "{{ drink.bildurl }}" class="drinkImg">
+                        <a href="/delete/{{ drink.id }}"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Remove drink</button></a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            {% for drink in drinkList %}
+                {% if drink.type == "sot" %}
+                    <div class="mix sot col-md-3 box game_margin" data-myorder="2">
+                        <h2>{{ drink.namn }}</h2>
+                        <p>{{ drink.hv }}</p>
+                        <p>{{ drink.rating }}</p>
+                        <p>{{ drink.type }}</p>
+                        <p>{{ drink.instructions }}</p>
+                        {% if drink.ingredient1 != "" %}<p>{{ drink.ingredient1 }}</p>{% endif %}
+                        {% if drink.ingredient2 != "" %}<p>{{ drink.ingredient2 }}</p>{% endif %}
+                        {% if drink.ingredient3 != "" %}<p>{{ drink.ingredient3 }}</p>{% endif %}
+                        {% if drink.ingredient4 != "" %}<p>{{ drink.ingredient4 }}</p>{% endif %}
+                        {% if drink.ingredient5 != "" %}<p>{{ drink.ingredient5 }}</p>{% endif %}
+                        {% if drink.ingredient6 != "" %}<p>{{ drink.ingredient6 }}</p>{% endif %}
+                        {% if drink.ingredient7 != "" %}<p>{{ drink.ingredient7 }}</p>{% endif %}
+                        {% if drink.ingredient8 != "" %}<p>{{ drink.ingredient8 }}</p>{% endif %}
+                       <img src= "{{ drink.bildurl }}" class="drinkImg">
+
+                        <a href="/delete/{{ drink.id }}"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Remove drink</button></a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>
