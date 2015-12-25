@@ -5,8 +5,15 @@
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Jani\mysite\db.sqlite3</jdbc-url>
-      <libraries />
+      <jdbc-url>jdbc:sqlite:C:\Users\Jani\drink hemsida\db.sqlite3</jdbc-url>
+      <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/xerial-sqlite-license.txt</url>
+        </library>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/sqlite-jdbc-3.8.9.jar</url>
+        </library>
+      </libraries>
     </data-source>
     <data-source source="LOCAL" name="MySQL - @localhost" uuid="b2724fad-e985-42ea-bd13-8bac6bb8aa2e">
       <driver-ref>mysql</driver-ref>

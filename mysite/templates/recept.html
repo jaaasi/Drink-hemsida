@@ -15,52 +15,57 @@
             <button type="button" class="btn btn-default filter" data-filter=".sot">Sota</button>
         </div>
     </div>
-    <a href="/add/"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a new game</button></a>
+    <a href="/add/"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a new drink</button></a>
     <div id = "Container">
-        <div class="row">
             {% for drink in drinkList %}
-                {% if drink.type == "sur" %}
-                    <div class="mix sur col-md-3 box game_margin" data-myorder="1">
-                        <h2>{{ drink.namn }}</h2>
-                        <p>{{ drink.hv }}</p>
-                        <p>{{ drink.rating }}</p>
-                        <p>{{ drink.type }}</p>
-                        <p>{{ drink.instructions }}</p>
-                        {% if drink.ingredient1 != "" %}<p>{{ drink.ingredient1 }}</p>{% endif %}
-                        {% if drink.ingredient2 != "" %}<p>{{ drink.ingredient2 }}</p>{% endif %}
-                        {% if drink.ingredient3 != "" %}<p>{{ drink.ingredient3 }}</p>{% endif %}
-                        {% if drink.ingredient4 != "" %}<p>{{ drink.ingredient4 }}</p>{% endif %}
-                        {% if drink.ingredient5 != "" %}<p>{{ drink.ingredient5 }}</p>{% endif %}
-                        {% if drink.ingredient6 != "" %}<p>{{ drink.ingredient6 }}</p>{% endif %}
-                        {% if drink.ingredient7 != "" %}<p>{{ drink.ingredient7 }}</p>{% endif %}
-                        {% if drink.ingredient8 != "" %}<p>{{ drink.ingredient8 }}</p>{% endif %}
+                    <div class="mix {{ drink.type }} box">
                         <img src= "{{ drink.bildurl }}" class="drinkImg">
-                        <a href="/delete/{{ drink.id }}"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Remove drink</button></a>
-                    </div>
-                {% endif %}
-            {% endfor %}
-
-            {% for drink in drinkList %}
-                {% if drink.type == "sot" %}
-                    <div class="mix sot col-md-3 box game_margin" data-myorder="2">
                         <h2>{{ drink.namn }}</h2>
+
+                        <b>HV rating</b>
                         <p>{{ drink.hv }}</p>
+                        <b>Drink rating</b>
                         <p>{{ drink.rating }}</p>
-                        <p>{{ drink.type }}</p>
-                        <p>{{ drink.instructions }}</p>
-                        {% if drink.ingredient1 != "" %}<p>{{ drink.ingredient1 }}</p>{% endif %}
-                        {% if drink.ingredient2 != "" %}<p>{{ drink.ingredient2 }}</p>{% endif %}
-                        {% if drink.ingredient3 != "" %}<p>{{ drink.ingredient3 }}</p>{% endif %}
-                        {% if drink.ingredient4 != "" %}<p>{{ drink.ingredient4 }}</p>{% endif %}
-                        {% if drink.ingredient5 != "" %}<p>{{ drink.ingredient5 }}</p>{% endif %}
-                        {% if drink.ingredient6 != "" %}<p>{{ drink.ingredient6 }}</p>{% endif %}
-                        {% if drink.ingredient7 != "" %}<p>{{ drink.ingredient7 }}</p>{% endif %}
-                        {% if drink.ingredient8 != "" %}<p>{{ drink.ingredient8 }}</p>{% endif %}
-                       <img src= "{{ drink.bildurl }}" class="drinkImg">
+                        <b>Typ</b>
+                                        <p>{{ drink.type }}</p>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                          Visa recept
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <div class="modal-body">
+                                        <img src= "{{ drink.bildurl }}" class="drinkImg">
+                                        <h2>{{ drink.namn }}</h2>
+                                        <b>HV rating</b>
+                                        <p>{{ drink.hv }}</p>
+                                        <b>Drink rating</b>
+                                        <p>{{ drink.rating }}</p>
+                                        <b>Typ</b>
+                                        <p>{{ drink.type }}</p>
+                                        <b>Tillverknings instructioner</b>
+                                        <p>{{ drink.instructions }}</p>
+                                        <b>Ingredienser</b>
+                                        {% if drink.ingredient1 != "" %}<p>{{ drink.ingredient1 }}</p>{% endif %}
+                                        {% if drink.ingredient2 != "" %}<p>{{ drink.ingredient2 }}</p>{% endif %}
+                                        {% if drink.ingredient3 != "" %}<p>{{ drink.ingredient3 }}</p>{% endif %}
+                                        {% if drink.ingredient4 != "" %}<p>{{ drink.ingredient4 }}</p>{% endif %}
+                                        {% if drink.ingredient5 != "" %}<p>{{ drink.ingredient5 }}</p>{% endif %}
+                                        {% if drink.ingredient6 != "" %}<p>{{ drink.ingredient6 }}</p>{% endif %}
+                                        {% if drink.ingredient7 != "" %}<p>{{ drink.ingredient7 }}</p>{% endif %}
+                                        {% if drink.ingredient8 != "" %}<p>{{ drink.ingredient8 }}</p>{% endif %}
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
 
                         <a href="/delete/{{ drink.id }}"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Remove drink</button></a>
                     </div>
-                {% endif %}
             {% endfor %}
         </div>
     </div>
