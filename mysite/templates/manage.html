@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+   {% include "head.html" with pagetitle="Manage"%}
+</head>
+
+<body>
+    {% include "navbar.html" %}
+    <h1>Profile</h1>
+    {% if request.user.is_superuser == 1%}
+          <div style="clear:both"></div>
+              <h3><b>All registered users:</b></h3>
+              {% for user in users %}
+                  <p style="padding-top: 7px"><b>{{ user.first_name }} {{ user.last_name }}</b></p>
+                  <a href="/promotesuper/{{ user.id }}"><button type="button" class="btn btn-primary btn-xs">Promote to superuser</button></a>
+                  <a href="/demotesuper/{{ user.id }}"><button type="button" class="btn btn-primary btn-xs">Remove superuser rights.</button></a>
+              {% endfor %}
+          </div>
+    {% endif %}
+</body>
+</html>

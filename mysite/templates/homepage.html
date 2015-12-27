@@ -7,5 +7,14 @@
     {% include "navbar.html" %}
 
     <h1 class = "homePageHeader">Cocktails!</h1>
+    {% if user.is_superuser %}<a href="/addEvent/"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add new event</button></a>{% endif %}
+    {% for event in events %}
+        <div class="eventBox">
+            <h2>{{ event.title }}</h2>
+            <p>{{ event.shortText }}</p>
+            <p>start time: {{ event.startTime }}</p>
+            <p>end time: {{ event.endTime }}</p>
+        </div>
+    {% endfor %}
 </body>
 </html>

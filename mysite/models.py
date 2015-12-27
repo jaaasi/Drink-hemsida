@@ -36,7 +36,7 @@ class UserProfile(models.Model):
 
 class Drink(models.Model):
     namn = models.CharField(max_length=255)
-    bildurl = models.URLField(unique=True)
+    bildurl = models.URLField(unique=False)
     hv = models.DecimalField(default=0, decimal_places=1, max_digits=3)
     rating = models.DecimalField(max_digits=3, decimal_places=1)
     type = models.CharField(max_length=20)
@@ -49,3 +49,12 @@ class Drink(models.Model):
     ingredient6 = models.CharField(max_length=255)
     ingredient7 = models.CharField(max_length=255)
     ingredient8 = models.CharField(max_length=255)
+
+
+class Event(models.Model):
+    title = models.CharField(max_length=255)
+    longText = models.CharField(max_length=255)
+    shortText = models.CharField(max_length=255)
+    startTime = models.DateTimeField()
+    endTime = models.DateTimeField()
+    imgUrl = models.URLField(unique=False)

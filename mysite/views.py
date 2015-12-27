@@ -15,24 +15,69 @@ from django.template import loader
 
 
 def homepage(request):
-    return render_to_response('homepage.html', context_instance=RequestContext(request))
+    all_events = Event.objects.all()
+    return render_to_response('homepage.html', {'events': all_events, 'user': request.user}, context_instance=RequestContext(request))
 
 def profile(request, user_id):
-    return render_to_response('profile.html',context_instance=RequestContext(request))
+    all_users = User.objects.all()
+    return render_to_response('manage.html', {'users': all_users},context_instance=RequestContext(request))
 
+def edit(request):
+    if request.user.is_authenticated():
+        if request.method == 'POST':
+            return HttpResponseRedirect('/recept')
 
-
+def addEvent(request):
+    if request.user.is_authenticated():
+        if request.method == 'POST':
+            eName = request.POST['title']
+            elt = request.POST['longText']
+            est = request.POST['shortText']
+            estartTime = request.POST['startTime']
+            eendTime = request.POST['endTime']
+            imageUrl = request.POST['imgUrl']
+            newEvent = Event(title = eName, longText = elt, shortText = est, startTime = estartTime, endTime = eendTime, imgUrl = imageUrl)
+            newEvent.save()
+            messages.success(request, "Event added!")
+            return HttpResponseRedirect('/')
+        else:
+            return render_to_response("addEvent.html", context_instance=RequestContext(request))
+    else:
+        return HttpResponse("Please log in.")
 
 def recept(request):
+    if request.user.is_authenticated():
+        if request.user.is_superuser == 1:
+            if request.method == 'POST':
+                drinkToChange = request.POST['drinkID']
+                d = Drink.objects.get(id=drinkToChange)
+                d.namn = request.POST['drinkNamn']
+                d.bildurl = request.POST['url']
+                d.hv = request.POST['hv']
+                d.rating = request.POST['rating']
+                d.type = request.POST['type']
+                d.instructions = request.POST['instructions']
+                d.ingredient1 = request.POST['ingredient1']
+                d.ingredient2 = request.POST['ingredient2']
+                d.ingredient3 = request.POST['ingredient3']
+                d.ingredient4 = request.POST['ingredient4']
+                d.ingredient5 = request.POST['ingredient5']
+                d.ingredient6 = request.POST['ingredient6']
+                d.ingredient7 = request.POST['ingredient7']
+                d.ingredient8 = request.POST['ingredient8']
+                d.save()
+                messages.success(request, "Drinken endrades!")
+
     drinkList = Drink.objects.all()
-    return render_to_response('recept.html', {'drinkList': drinkList}, context_instance=RequestContext(request))
+    currentUser = request.user
+    return render_to_response('recept.html', {'drinkList': drinkList, 'user': currentUser }, context_instance=RequestContext(request))
 
 
 # Confirm that a new account is created
 def account_created(request):
     return render_to_response("accountcreated.html", {}, context_instance=RequestContext(request))
 
-def add(request):
+def addDrink(request):
     if request.user.is_authenticated():
         if request.method == 'POST':
             drinkNamn = request.POST['drinkNamn']
@@ -55,7 +100,7 @@ def add(request):
             messages.success(request, "Drinken lades till!")
             return HttpResponseRedirect('/recept')
         else:
-            return render_to_response("add.html", context_instance=RequestContext(request))
+            return render_to_response("addDrink.html", context_instance=RequestContext(request))
     else:
         return HttpResponse("Please log in.")
 
@@ -125,6 +170,11 @@ def login_view(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                try:
+                    user = UserProfile.objects.get(user_id=request.user.id)
+                except UserProfile.DoesNotExist:
+                    new_user = UserProfile(user_id=request.user.id, is_developer=0)
+                    new_user.save()
             else:
                 messages.error(request, "The account is not active.")
         else:
@@ -138,3 +188,23 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+# Demotes user from being superuser
+def demotesuper(request, id):
+    if request.user.is_superuser == 1:
+        user = User.objects.get(id=id)
+        user.is_superuser = 0
+        user.save()
+        return HttpResponseRedirect('/profile/' + str(request.user.id))
+    else:
+        HttpResponse("Only superusers can promote/demote users")
+
+def promotesuper(request, id):
+    if request.user.is_superuser == 1:
+        user = User.objects.get(id=id)
+        user.is_superuser = 1
+        user.save()
+        return HttpResponseRedirect('/profile/' + str(request.user.id))
+
+    else:
+        HttpResponse("Only superusers can promote/demote users")

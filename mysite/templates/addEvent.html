@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+   {% include "head.html" with pagetitle="Profile"%}
+</head>
+
+<body class = "background">
+    {% include "navbar.html" %}
+    <h1 class = "homePageHeader">Recept</h1>
+    <div class="addEvent">
+        {% if request.user.is_authenticated and user.is_superuser%}
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="longText">Long text</label>
+                    <input type="text" class="form-control" name="longText">
+                </div>
+                <div class="form-group">
+                    <label for="shortText">Short text</label>
+                    <input type="text" class="form-control" name="shortText">
+                </div>
+                <div class="form-group">
+                    <label for="startTime">Start date and time (YYYY-MM-DD HH:MM)</label>
+                    <input type="datetime" class="form-control" name="startTime">
+                </div>
+                <div class="form-group">
+                    <label for="endTime">End date and time (YYYY-MM-DD HH:MM)</label>
+                    <input type="datetime" class="form-control" name="endTime">
+                </div>
+                <div class="form-group">
+                    <label for="imgUrl">Image URL</label>
+                    <input type="text" class="form-control" name="imgUrl">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -30,7 +30,10 @@ urlpatterns = [
     url('', include('social.apps.django_app.urls', namespace='social')),
     url('', include('django.contrib.auth.urls', namespace='auth')),
     url(r'^recept/$', recept),
-    url(r'^add/$', add),
+    url(r'^addDrink/$', addDrink),
+    url(r'^addEvent/$', addEvent),
     url(r'^delete/(?P<id>\d+)/$', delete),
+    url(r'^promotesuper/(?P<id>\d+)/$', promotesuper),
+    url(r'^demotesuper/(?P<id>\d+)/$', demotesuper),
 
 ]

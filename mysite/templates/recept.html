@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-   {% include "head.html" with pagetitle="Profile"%}
+   {% include "head.html" with pagetitle="Recept"%}
 </head>
 <body class = "background">
     {% include "navbar.html" %}
@@ -15,60 +15,135 @@
             <button type="button" class="btn btn-default filter" data-filter=".sot">Sota</button>
         </div>
     </div>
-    <a href="/add/"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a new drink</button></a>
+    <a href="/addDrink/"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add a new drink</button></a>
     <div id = "Container">
             {% for drink in drinkList %}
-                    <div class="mix {{ drink.type }} box">
-                        <img src= "{{ drink.bildurl }}" class="drinkImg">
-                        <h2>{{ drink.namn }}</h2>
-
-                        <b>HV rating</b>
-                        <p>{{ drink.hv }}</p>
-                        <b>Drink rating</b>
-                        <p>{{ drink.rating }}</p>
-                        <b>Typ</b>
-                                        <p>{{ drink.type }}</p>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                          Visa recept
+                <div class="mix {{ drink.type }} box">
+                    <img src= "{{ drink.bildurl }}" class="drinkImg">
+                    <h2>{{ drink.namn }}</h2>
+                    <b>HV rating</b>
+                    <p>{{ drink.hv }}</p>
+                    <b>Drink rating</b>
+                    <p>{{ drink.rating }}</p>
+                    <b>Typ</b>
+                    <p>{{ drink.type }}</p>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal{{ drink.id }}">
+                      Visa recept
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal{{ drink.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <div class="modal-body">
+                                    <img src= "{{ drink.bildurl }}" class="drinkImg">
+                                    <h2>{{ drink.namn }}</h2>
+                                    <b>HV rating</b>
+                                    <p>{{ drink.hv }}</p>
+                                    <b>Drink rating</b>
+                                    <p>{{ drink.rating }}</p>
+                                    <b>Typ</b>
+                                    <p>{{ drink.type }}</p>
+                                    <b>Tillverknings instructioner</b>
+                                    <p>{{ drink.instructions }}</p>
+                                    <b>Ingredienser</b>
+                                    {% if drink.ingredient1 != "" %}<p>{{ drink.ingredient1 }}</p>{% endif %}
+                                    {% if drink.ingredient2 != "" %}<p>{{ drink.ingredient2 }}</p>{% endif %}
+                                    {% if drink.ingredient3 != "" %}<p>{{ drink.ingredient3 }}</p>{% endif %}
+                                    {% if drink.ingredient4 != "" %}<p>{{ drink.ingredient4 }}</p>{% endif %}
+                                    {% if drink.ingredient5 != "" %}<p>{{ drink.ingredient5 }}</p>{% endif %}
+                                    {% if drink.ingredient6 != "" %}<p>{{ drink.ingredient6 }}</p>{% endif %}
+                                    {% if drink.ingredient7 != "" %}<p>{{ drink.ingredient7 }}</p>{% endif %}
+                                    {% if drink.ingredient8 != "" %}<p>{{ drink.ingredient8 }}</p>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if user.is_superuser %}
+                        <a href="/delete/{{ drink.id }}"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Remove drink</button></a>
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#editModal{{ drink.id }}">
+                            Edit drink
                         </button>
                         <!-- Modal -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal fade" id="editModal{{ drink.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <div class="modal-body">
-                                        <img src= "{{ drink.bildurl }}" class="drinkImg">
-                                        <h2>{{ drink.namn }}</h2>
-                                        <b>HV rating</b>
-                                        <p>{{ drink.hv }}</p>
-                                        <b>Drink rating</b>
-                                        <p>{{ drink.rating }}</p>
-                                        <b>Typ</b>
-                                        <p>{{ drink.type }}</p>
-                                        <b>Tillverknings instructioner</b>
-                                        <p>{{ drink.instructions }}</p>
-                                        <b>Ingredienser</b>
-                                        {% if drink.ingredient1 != "" %}<p>{{ drink.ingredient1 }}</p>{% endif %}
-                                        {% if drink.ingredient2 != "" %}<p>{{ drink.ingredient2 }}</p>{% endif %}
-                                        {% if drink.ingredient3 != "" %}<p>{{ drink.ingredient3 }}</p>{% endif %}
-                                        {% if drink.ingredient4 != "" %}<p>{{ drink.ingredient4 }}</p>{% endif %}
-                                        {% if drink.ingredient5 != "" %}<p>{{ drink.ingredient5 }}</p>{% endif %}
-                                        {% if drink.ingredient6 != "" %}<p>{{ drink.ingredient6 }}</p>{% endif %}
-                                        {% if drink.ingredient7 != "" %}<p>{{ drink.ingredient7 }}</p>{% endif %}
-                                        {% if drink.ingredient8 != "" %}<p>{{ drink.ingredient8 }}</p>{% endif %}
-
+                                        <form method="post" action="">
+                                        {% csrf_token %}
+                                            <div class="form-group">
+                                                <label for="drinkNamn">Drink namn</label>
+                                                <input type="text" class="form-control" name="drinkNamn" value="{{ drink.namn }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="url">bild url</label>
+                                                <input type="url" class="form-control" name="url" value="{{ drink.bildurl }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="hv">HV-rating</label>
+                                                <input type="text" class="form-control" name="hv" value="{{ drink.hv }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="rating">Rating</label>
+                                                <input type="text" class="form-control" name="rating" value="{{ drink.rating }}">
+                                            </div>
+                                            <div>
+                                                <label for="type">Drinkens typ</label>
+                                                <select name="type" id="type" value="{{ drink.type }}">
+                                                    <option value="sur" {% if drink.type == "sur" %} selected = "selected" {% endif %}>Sur</option>
+                                                    <option value="sot" {% if drink.type == "sot" %} selected="selected" {% endif %}>Sot</option>
+                                                </select><br>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="instructions">Instructions (max 255 characters)</label>
+                                                <input type="text" class="form-control" name="instructions" value="{{ drink.instructions}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ingredient1">Ingredient 1</label>
+                                                <input type="text" class="form-control" name="ingredient1" value="{{ drink.ingredient1 }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ingredient2">Ingredient 2</label>
+                                                <input type="text" class="form-control" name="ingredient2" value="{{ drink.ingredient2 }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ingredient3">Ingredient 3</label>
+                                                <input type="text" class="form-control" name="ingredient3" value="{{ drink.ingredient3 }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ingredient4">Ingredient 4</label>
+                                                <input type="text" class="form-control" name="ingredient4" value="{{ drink.ingredient4 }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ingredient5">Ingredient 5</label>
+                                                <input type="text" class="form-control" name="ingredient5" value="{{ drink.ingredient5 }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ingredient6">Ingredient 6</label>
+                                                <input type="text" class="form-control" name="ingredient6" value="{{ drink.ingredient6 }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ingredient7">Ingredient 7</label>
+                                                <input type="text" class="form-control" name="ingredient7" value="{{ drink.ingredient7 }}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="ingredient8">Ingredient 8</label>
+                                                <input type="text" class="form-control" name="ingredient8" value="{{ drink.ingredient8 }}">
+                                            </div>
+                                            <input type="hidden" name="drinkID" value={{ drink.id }}>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
+                    {% endif %}
+                </div>
 
-                        <a href="/delete/{{ drink.id }}"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Remove drink</button></a>
-                    </div>
             {% endfor %}
         </div>
     </div>
-
 </body>
 </html>
