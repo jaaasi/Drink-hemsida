@@ -3,7 +3,7 @@
 <li class="dropdown" id="menulogout">
 	<p class="navbar-text">Logged in as <strong>{{user.username}}</strong></p>
 	<ul class="nav navbar-nav">
-		<li class="{% active request "/profile/" %}"><a href="/profile/{{ user.id }}/">My profile</a></li>
+		<li class="{% active request "/profile/" %}"><a href="/profile/{{ user.id }}/">Manage</a></li>
 		<li><a href="/logout/">Log out</a></li>
 	</ul>
 </li>

@@ -10,10 +10,11 @@
     {% if user.is_superuser %}<a href="/addEvent/"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add new event</button></a>{% endif %}
     {% for event in events %}
         <div class="eventBox">
-            <h2>{{ event.title }}</h2>
+            <a href="/event/{{ event.id }}/"><h2>{{ event.title }}</h2></a>
             <p>{{ event.shortText }}</p>
             <p>start time: {{ event.startTime }}</p>
             <p>end time: {{ event.endTime }}</p>
+        {% if user.is_superuser %}<a href="/editEvent/{{event.id}}"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Edit event</button></a>{% endif %}
         </div>
     {% endfor %}
 </body>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+   {% include "head.html" with pagetitle="Edit event"%}
+</head>
+<body class = "background">
+    {% include "navbar.html" %}
+    <div class = "basicdiv">
+        <h1>{{ event.title }}</h1>
+        <p>{{ event.longText }}</p>
+        <p>start time: {{ event.startTime }}</p>
+        <p>end time: {{ event.endTime }}</p>
+        <img src="{{ event.imgUrl }}">
+        {% if user.is_superuser %}<a href="/editEvent/{{event.id}}"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Edit event</button></a>{% endif %}
+    </div>
+</body>
+</html>

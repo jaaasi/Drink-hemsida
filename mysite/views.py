@@ -22,13 +22,9 @@ def profile(request, user_id):
     all_users = User.objects.all()
     return render_to_response('manage.html', {'users': all_users},context_instance=RequestContext(request))
 
-def edit(request):
-    if request.user.is_authenticated():
-        if request.method == 'POST':
-            return HttpResponseRedirect('/recept')
 
 def addEvent(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated() and request.user.is_superuser:
         if request.method == 'POST':
             eName = request.POST['title']
             elt = request.POST['longText']
@@ -44,6 +40,25 @@ def addEvent(request):
             return render_to_response("addEvent.html", context_instance=RequestContext(request))
     else:
         return HttpResponse("Please log in.")
+
+def editEvent(request, eventID):
+    event = Event.objects.get(id=eventID)
+    if request.user.is_authenticated() and request.user.is_superuser:
+        if request.method == 'POST':
+            event.title = request.POST['title']
+            event.longText = request.POST['longText']
+            event.shortText = request.POST['shortText']
+            event.startTime = request.POST['startTime']
+            event.endTime = request.POST['endTime']
+            event.imgUrl = request.POST['imgUrl']
+            event.save()
+            messages.success(request,"Event edited!")
+            return HttpResponseRedirect('/')
+    return render_to_response("editEvent.html", {'event': event}, context_instance=RequestContext(request))
+
+def event(request, eventID):
+    eventt = Event.objects.get(id=eventID)
+    return render_to_response("event.html", {'event': eventt}, context_instance=RequestContext(request))
 
 def recept(request):
     if request.user.is_authenticated():

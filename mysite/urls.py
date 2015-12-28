@@ -21,6 +21,8 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', homepage),
     url(r'^profile/(\d+)/$', profile),
+    url(r'^editEvent/(\d+)/$', editEvent),
+    url(r'^event/(\d+)/$', event),
     url(r'^createaccount/$', create_account),
     url(r'^login/$', login_view),
     url(r'^logout/$', logout_view),
