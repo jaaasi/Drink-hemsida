@@ -12,6 +12,8 @@
         <p>end time: {{ event.endTime }}</p>
         <img src="{{ event.imgUrl }}">
         {% if user.is_superuser %}<a href="/editEvent/{{event.id}}"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Edit event</button></a>{% endif %}
+        <a href="/eventSignUp/{{ event.id }}"><button tyoe = "button" class="btn btn-success btn-sm">Sign up for event!</button></a>
+
     </div>
 </body>
 </html>

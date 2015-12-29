@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div class="basicdiv">
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" name="email">
+            </div>
+
+            <div class="form-group">
+                <label for="allergies">Allergies</label>
+                <input type="text" class="form-control" name="allergies">
+            </div>
+
+            <div class="form-group">
+                <label for="greetings">Greetings</label>
+                <input type="text" class="form-control" name="greetings">
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" name="id" value="{{ event.id }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

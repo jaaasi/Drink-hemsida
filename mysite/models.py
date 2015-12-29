@@ -58,3 +58,16 @@ class Event(models.Model):
     startTime = models.DateTimeField()
     endTime = models.DateTimeField()
     imgUrl = models.URLField(unique=False)
+    maxParticipants = models.IntegerField()
+
+
+
+class Participant(models.Model):
+    namn = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    email = models.EmailField()
+    allergies = models.CharField(max_length=255)
+    greetings = models.CharField(max_length = 255)
+    eventID = models.IntegerField()
+
+

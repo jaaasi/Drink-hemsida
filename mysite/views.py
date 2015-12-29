@@ -32,7 +32,8 @@ def addEvent(request):
             estartTime = request.POST['startTime']
             eendTime = request.POST['endTime']
             imageUrl = request.POST['imgUrl']
-            newEvent = Event(title = eName, longText = elt, shortText = est, startTime = estartTime, endTime = eendTime, imgUrl = imageUrl)
+            emaxParticipants = request.POST['maxParticipants']
+            newEvent = Event(title = eName, longText = elt, shortText = est, startTime = estartTime, endTime = eendTime, imgUrl = imageUrl, maxParticipants=emaxParticipants)
             newEvent.save()
             messages.success(request, "Event added!")
             return HttpResponseRedirect('/')
@@ -57,8 +58,22 @@ def editEvent(request, eventID):
     return render_to_response("editEvent.html", {'event': event}, context_instance=RequestContext(request))
 
 def event(request, eventID):
+    event = Event.objects.get(id=eventID)
+    return render_to_response("event.html", {'event': event}, context_instance=RequestContext(request))
+
+def eventSignUp(request, eventID):
     eventt = Event.objects.get(id=eventID)
-    return render_to_response("event.html", {'event': eventt}, context_instance=RequestContext(request))
+    if request.method == 'POST':
+        pname = request.POST['name']
+        pemail= request.POST['email']
+        pallergies = request.POST['allergies']
+        pgreetings = request.POST['greetings']
+        peventID = request.POST['id']
+        participant=Participant(namn=pname, email = pemail, allergies = pallergies, greetings=pgreetings, eventID=peventID)
+        participant.save()
+        messages.success(request, 'Sign up succeeded!')
+        return HttpResponseRedirect('/')
+    return render_to_response("eventSignUp.html", {'event':eventt}, context_instance=RequestContext(request))
 
 def recept(request):
     if request.user.is_authenticated():

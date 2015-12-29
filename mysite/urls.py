@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^$', homepage),
     url(r'^profile/(\d+)/$', profile),
     url(r'^editEvent/(\d+)/$', editEvent),
+    url(r'^eventSignUp/(\d+)/$', eventSignUp),
     url(r'^event/(\d+)/$', event),
     url(r'^createaccount/$', create_account),
     url(r'^login/$', login_view),
