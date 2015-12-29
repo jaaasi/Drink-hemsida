@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-   {% include "head.html" with pagetitle="Edit event"%}
+   {% include "head.html" with pagetitle="Event"%}
 </head>
 <body class = "background">
     {% include "navbar.html" %}
@@ -10,10 +10,19 @@
         <p>{{ event.longText }}</p>
         <p>start time: {{ event.startTime }}</p>
         <p>end time: {{ event.endTime }}</p>
+        <p>max participants: {{ event.maxParticipants }}</p>
         <img src="{{ event.imgUrl }}">
         {% if user.is_superuser %}<a href="/editEvent/{{event.id}}"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Edit event</button></a>{% endif %}
-        <a href="/eventSignUp/{{ event.id }}"><button tyoe = "button" class="btn btn-success btn-sm">Sign up for event!</button></a>
-
+        <a href="/eventSignUp/{{ event.id }}"><button type = "button" class="btn btn-success btn-sm">Sign up for event!</button></a>
     </div>
+    {% if user.is_superuser %}
+    <div class="basicdiv">
+        {% for p in participantList %}
+            <div>
+                <p>Namn: {{ p.namn }}, email: {{ p.email }}, allergier: {{ p.allergies }}, halsningar: {{ p.greetings }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 </body>
 </html>

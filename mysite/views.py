@@ -52,14 +52,16 @@ def editEvent(request, eventID):
             event.startTime = request.POST['startTime']
             event.endTime = request.POST['endTime']
             event.imgUrl = request.POST['imgUrl']
+            event.maxParticipants = request.POST['maxParticipants']
             event.save()
             messages.success(request,"Event edited!")
             return HttpResponseRedirect('/')
     return render_to_response("editEvent.html", {'event': event}, context_instance=RequestContext(request))
 
-def event(request, eventID):
-    event = Event.objects.get(id=eventID)
-    return render_to_response("event.html", {'event': event}, context_instance=RequestContext(request))
+def event(request, ID):
+    event = Event.objects.get(id=ID)
+    participantList = Participant.objects.all().filter(eventID=ID)
+    return render_to_response("event.html", {'event': event, 'participantList': participantList}, context_instance=RequestContext(request))
 
 def eventSignUp(request, eventID):
     eventt = Event.objects.get(id=eventID)
@@ -98,7 +100,9 @@ def recept(request):
                 d.save()
                 messages.success(request, "Drinken endrades!")
 
-    drinkList = Drink.objects.all()
+    drinkList = Drink.objects.order_by('-rating', '-hv')
+
+
     currentUser = request.user
     return render_to_response('recept.html', {'drinkList': drinkList, 'user': currentUser }, context_instance=RequestContext(request))
 
