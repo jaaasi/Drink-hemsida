@@ -14,7 +14,22 @@
             <p>{{ event.shortText }}</p>
             <p>start time: {{ event.startTime }}</p>
             <p>end time: {{ event.endTime }}</p>
-        {% if user.is_superuser %}<a href="/editEvent/{{event.id}}"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Edit event</button></a>{% endif %}
+        {% if user.is_superuser %}
+            <a href="/editEvent/{{event.id}}"><button type="button" class="btn btn-success btn-sm">Edit event</button></a>
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ event.id }}">
+                Delete event
+            </button>
+            <div class="modal fade" id="deleteModal{{ event.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete the event?</p>
+                            <a href="/deleteEvent/{{event.id}}"><button type="button" class="btn btn-danger btn-sm">Delete event</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
         </div>
     {% endfor %}
 </body>

@@ -6,14 +6,20 @@
 <body class = "background">
     {% include "navbar.html" %}
     <div class = "basicdiv">
+        <img src="{{ event.imgUrl }}" class="drinkImg">
+
         <h1>{{ event.title }}</h1>
         <p>{{ event.longText }}</p>
         <p>start time: {{ event.startTime }}</p>
         <p>end time: {{ event.endTime }}</p>
         <p>max participants: {{ event.maxParticipants }}</p>
-        <img src="{{ event.imgUrl }}">
-        {% if user.is_superuser %}<a href="/editEvent/{{event.id}}"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Edit event</button></a>{% endif %}
-        <a href="/eventSignUp/{{ event.id }}"><button type = "button" class="btn btn-success btn-sm">Sign up for event!</button></a>
+
+        {% if user.is_superuser %}<a href="/editEvent/{{event.id}}"><button type="button" class="btn btn-success btn-sm">Edit event</button></a>{% endif %}
+        {% if count  >= event.maxParticipants %}
+            <p>Event is full!</p>
+        {% else %}
+            <a href="/eventSignUp/{{ event.id }}"><button type = "button" class="btn btn-success btn-sm">Sign up for event!</button></a>
+        {% endif %}
     </div>
     {% if user.is_superuser %}
     <div class="basicdiv">

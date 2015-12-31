@@ -35,7 +35,8 @@ urlpatterns = [
     url(r'^recept/$', recept),
     url(r'^addDrink/$', addDrink),
     url(r'^addEvent/$', addEvent),
-    url(r'^delete/(?P<id>\d+)/$', delete),
+    url(r'^deleteDrink/(?P<id>\d+)/$', deleteDrink),
+    url(r'^deleteEvent/(?P<id>\d+)/$', deleteEvent),
     url(r'^promotesuper/(?P<id>\d+)/$', promotesuper),
     url(r'^demotesuper/(?P<id>\d+)/$', demotesuper),
 

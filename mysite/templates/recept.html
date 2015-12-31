@@ -35,7 +35,6 @@
                     <div class="modal fade" id="myModal{{ drink.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <div class="modal-body">
                                     <img src= "{{ drink.bildurl }}" class="drinkImg">
                                     <h2>{{ drink.namn }}</h2>
@@ -61,7 +60,24 @@
                         </div>
                     </div>
                     {% if user.is_superuser %}
-                        <a href="/delete/{{ drink.id }}"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Remove drink</button></a>
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#deleteModal{{ drink.id }}">
+                            Delete drink
+                        </button>
+                        <div class="modal fade" id="deleteModal{{ drink.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete the drink?</p>
+                                        <a href="/deleteDrink/{{ drink.id }}"><button type="button" class="btn btn-danger btn-sm">Remove drink</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
                         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#editModal{{ drink.id }}">
                             Edit drink
                         </button>
@@ -69,7 +85,6 @@
                         <div class="modal fade" id="editModal{{ drink.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <div class="modal-body">
                                         <form method="post" action="">
                                         {% csrf_token %}

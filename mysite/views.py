@@ -1,16 +1,14 @@
-import string
 from django.core.mail import send_mail
 from django.template import RequestContext
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, JsonResponse, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404, render, redirect
 from django.contrib import messages
 import random
 from mysite.models import *
 import string
 from django.contrib.auth.models import User
-from django.template import loader
 
 
 
@@ -54,14 +52,15 @@ def editEvent(request, eventID):
             event.imgUrl = request.POST['imgUrl']
             event.maxParticipants = request.POST['maxParticipants']
             event.save()
-            messages.success(request,"Event edited!")
+            messages.success(request, "Event edited!")
             return HttpResponseRedirect('/')
     return render_to_response("editEvent.html", {'event': event}, context_instance=RequestContext(request))
 
 def event(request, ID):
     event = Event.objects.get(id=ID)
     participantList = Participant.objects.all().filter(eventID=ID)
-    return render_to_response("event.html", {'event': event, 'participantList': participantList}, context_instance=RequestContext(request))
+    count = len(participantList)
+    return render_to_response("event.html", {'event': event, 'participantList': participantList, 'count': count}, context_instance=RequestContext(request))
 
 def eventSignUp(request, eventID):
     eventt = Event.objects.get(id=eventID)
@@ -79,7 +78,7 @@ def eventSignUp(request, eventID):
 
 def recept(request):
     if request.user.is_authenticated():
-        if request.user.is_superuser == 1:
+        if request.user.is_superuser:
             if request.method == 'POST':
                 drinkToChange = request.POST['drinkID']
                 d = Drink.objects.get(id=drinkToChange)
@@ -138,11 +137,19 @@ def addDrink(request):
     else:
         return HttpResponse("Please log in.")
 
-# Delete game
-def delete(request, id):
-    get_object_or_404(Drink, pk=id).delete()
-    messages.success(request, "Drinken har tagits bort!")
+
+def deleteDrink(request, id):
+    if request.user.is_superuser:
+        get_object_or_404(Drink, pk=id).delete()
+        messages.success(request, "Drinken har tagits bort!")
     return HttpResponseRedirect('/recept')
+
+
+def deleteEvent(request, id):
+    if request.user.is_superuser:
+        get_object_or_404(Event, pk=id).delete()
+        messages.success(request, "Evenemanget har tagits bort!")
+    return HttpResponseRedirect('/')
 
 
 # Function for creating an account that is inactive, calls send_registration_confirmation function
@@ -174,7 +181,7 @@ def id_generator(size=6, chars=string.ascii_lowercase):
 # Sends an account confirmation email to the user with a link for activating the account
 def send_registration_confirmation(user):
     title = "Account confirmation"
-    content = "To activate your account follow the link: https://sol-wsd.herokuapp.com/confirmation/" + str(user.confirmation_code) + "/" + user.username
+    content = "To activate your account follow the link: localhost:8000/confirmation/" + str(user.confirmation_code) + "/" + user.username
     send_mail(title, content, '', [user.email], fail_silently=False)
 
 
